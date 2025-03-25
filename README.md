@@ -1,4 +1,4 @@
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
 
@@ -326,6 +326,7 @@
         </div>
         
         <!-- Checkbox list below the graph -->
+        <div id="checkboxListContainer" style="max-height: 200px; overflow-y: auto;">
         <div id="checkboxList">
             <h3>Select Keywords (Frequency)</h3>
             <!-- Checkboxes will be dynamically added here -->
