@@ -2351,7 +2351,7 @@ function downloadCSV5() {
     link.click();
 }
 </script>
-</div></div></div></div>
+
  <script>
         // Tab Switching Logic
         const tabs = document.querySelectorAll('.tab');
