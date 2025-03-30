@@ -384,9 +384,7 @@
     </style>
 </head>
 <body>
-<div>
-<div><div><div>
-</div>
+
 <div class="tabs">
         <div class="tab active" data-tab="tab1">Author Keywords</div>
         <div class="tab" data-tab="tab2">Index Keywords</div>
@@ -849,8 +847,6 @@
             <!-- Checkboxes will be dynamically added here -->
         </div>
     </div>
-</div>
-   
 
 <script>
     // Specific code for Tab 2 (Index Keywords)
@@ -1537,8 +1533,6 @@ function downloadCSV3() {
     link.click();
 }
 </script>
-</div>
-
 
 <!-- Add this with your other tabs -->
 <div id="tab4" class="tab-content">
@@ -1948,7 +1942,6 @@ function downloadCSV4() {
     link.click();
 }
 </script>
-</div>
 
 
 <div id="tab5" class="tab-content">
@@ -2358,7 +2351,6 @@ function downloadCSV5() {
     link.click();
 }
 </script>
-</div>
 </div></div></div></div>
  <script>
         // Tab Switching Logic
