@@ -742,21 +742,28 @@
                 }
             }
             // Get top N keywords based on total frequency
-            const topKeywords = Object.entries(keywordTotalFrequencies)
-                .sort((a, b) => b[1] - a[1]) // Sort by total frequency
-                .slice(0, topN);
-            // Add rows for top keywords
-            topKeywords.forEach(([keyword, totalFrequency]) => {
+                    const topKeywords = Object.entries(keywordTotalFrequencies)
+                        .sort((a, b) => b[1] - a[1]) // Sort by total frequency
+                        .slice(0, topN);
+                    // Add rows for top keywords
+                    topKeywords.forEach(([keyword, totalFrequency]) => {
                 const row = [keyword];
                 for (let year = startYear; year <= endYear; year++) {
-                    const yearData = filteredData.find(row => row[0] === keyword && row[1] === year);
-                    row.push(yearData ? yearData[2] : 0); // Use frequency if found, otherwise 0
+                    // Find the exact match for this keyword and year
+                    const match = transformedData.find(r => 
+                        r[0] === keyword && 
+                        r[1] == year &&  // Note: == instead of === to handle string vs number
+                        year >= startYear && 
+                        year <= endYear
+                    );
+                    row.push(match ? match[2] : 0);
                 }
-                row.push(filteredKeywordFrequencies[keyword] || 0); // Total within range
-                row.push(totalFrequency); // Total across all years
+                row.push(filteredKeywordFrequencies[keyword] || 0);
+                row.push(totalFrequency);
                 csvData.push(row);
             });
-            // Convert to CSV format
+           
+                    // Convert to CSV format
             const csvContent = csvData.map(row => row.join(',')).join('\n');
             // Create a downloadable link
             const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
@@ -1172,16 +1179,23 @@
             .sort((a, b) => b[1] - a[1]) // Sort by total frequency
             .slice(0, topN2);
         // Add rows for top keywords
-        topKeywords2.forEach(([keyword2, totalFrequency2]) => {
-            const row2 = [keyword2];
-            for (let year2 = startYear2; year2 <= endYear2; year2++) {
-                const yearData2 = filteredData2.find(row2 => row2[0] === keyword2 && row2[1] === year);
-                row2.push(yearData2 ? yearData2[2] : 0); // Use frequency if found, otherwise 0
-            }
-            row2.push(filteredKeywordFrequencies2[keyword2] || 0); // Total within range
-            row2.push(totalFrequency2); // Total across all years
-            csvData2.push(row2);
-        });
+      
+    topKeywords2.forEach(([keyword2, totalFrequency2]) => {
+        const row2 = [keyword2];
+        for (let year2 = startYear2; year2 <= endYear2; year2++) {
+            const match = transformedData2.find(r => 
+                r[0] === keyword2 && 
+                r[1] == year2 &&  // Note: == instead of ===
+                year2 >= startYear2 && 
+                year2 <= endYear2
+            );
+            row2.push(match ? match[2] : 0);
+        }
+        row2.push(filteredKeywordFrequencies2[keyword2] || 0);
+        row2.push(totalFrequency2);
+        csvData2.push(row2);
+    });
+
         // Convert to CSV format
         const csvContent2 = csvData2.map(row2 => row2.join(',')).join('\n');
         // Create a downloadable link
@@ -1500,13 +1514,18 @@ function downloadCSV3() {
         }
     }
 
-    Object.entries(keywordTotals)
+  Object.entries(keywordTotals)
         .sort((a, b) => b[1] - a[1])
         .slice(0, topN)
         .forEach(([keyword, total]) => {
             const row = [keyword];
             for (let year = startYear; year <= endYear; year++) {
-                const match = filteredData.find(r => r[0] === keyword && r[1] === year);
+                const match = transformedData3.find(r => 
+                    r[0] === keyword && 
+                    r[1] == year &&  // Note: == instead of ===
+                    year >= startYear && 
+                    year <= endYear
+                );
                 row.push(match ? match[2] : 0);
             }
             row.push(filteredFrequencies[keyword] || 0, total);
@@ -1910,16 +1929,19 @@ function downloadCSV4() {
         .slice(0, topN)
         .forEach(([word, total]) => {
             const row = [word];
-           
             for (let year = startYear; year <= endYear; year++) {
-                const match = filteredData.find(r => r[0] === word && r[1] === year);
+                const match = transformedData4.find(r => 
+                    r[0] === word && 
+                    r[1] == year &&  // Note: == instead of ===
+                    year >= startYear && 
+                    year <= endYear
+                );
                 row.push(match ? match[2] : 0);
             }
-           
             row.push(filteredFrequencies[word] || 0, total);
             csvData.push(row);
         });
-   
+        
     // Create download link
     const blob = new Blob([csvData.map(row => row.join(',')).join('\n')], { type: 'text/csv' });
     const link = document.createElement('a');
@@ -2317,16 +2339,19 @@ function downloadCSV5() {
         .slice(0, topN)
         .forEach(([word, total]) => {
             const row = [word];
-            
             for (let year = startYear; year <= endYear; year++) {
-                const match = filteredData.find(r => r[0] === word && r[1] === year);
+                const match = transformedData5.find(r => 
+                    r[0] === word && 
+                    r[1] == year &&  // Note: == instead of ===
+                    year >= startYear && 
+                    year <= endYear
+                );
                 row.push(match ? match[2] : 0);
             }
-            
             row.push(filteredFrequencies[word] || 0, total);
             csvData.push(row);
         });
-    
+        
     // Create download link
     const blob = new Blob([csvData.map(row => row.join(',')).join('\n')], { type: 'text/csv' });
     const link = document.createElement('a');
